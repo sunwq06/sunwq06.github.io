@@ -1,7 +1,10 @@
 ---
 layout: post
 title: "GBDT和XGBOOST算法原理"
-tags: [机器学习]
+categories:
+  - Machine Learning
+tags:
+  - Supervised Learning
 date: 2018-11-22
 ---
 

@@ -1,7 +1,10 @@
 ---
 layout: post
 title: "梯度下降和正则化介绍"
-tags: [深度学习]
+categories:
+  - Deep Learning
+tags:
+  - Neural Network
 date: 2019-03-04
 ---
 

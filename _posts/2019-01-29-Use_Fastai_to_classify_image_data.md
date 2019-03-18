@@ -1,7 +1,12 @@
 ---
 layout: post
 title: "使用fastai完成图像分类"
-tags: [深度学习]
+categories:
+  - Deep Learning
+tags:
+  - Fastai
+  - CNN
+  - Application
 date: 2019-01-29
 ---
 

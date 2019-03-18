@@ -1,7 +1,10 @@
 ---
 layout: post
 title: "PCA与LDA降维介绍"
-tags: [机器学习]
+categories:
+  - Machine Learning
+tags:
+  - Unsupervised Learning
 date: 2019-02-01
 ---
 

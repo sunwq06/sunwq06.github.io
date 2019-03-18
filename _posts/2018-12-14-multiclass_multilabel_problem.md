@@ -1,7 +1,11 @@
 ---
 layout: post
 title: "机器学习应用示例：多类别多标签问题"
-tags: [机器学习]
+categories:
+  - Machine Learning
+tags:
+  - Supervised Learning
+  - Application
 date: 2018-12-14
 ---
 

@@ -1,7 +1,12 @@
 ---
 layout: post
 title: "使用keras进行迁移学习(Transfer Learning)"
-tags: [深度学习]
+categories:
+  - Deep Learning
+tags:
+  - CNN
+  - Transfer Learning
+  - Keras
 date: 2018-09-18
 ---
 

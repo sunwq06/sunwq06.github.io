@@ -1,7 +1,11 @@
 ---
 layout: post
 title: "使用R语言进行时间序列分析—基础"
-tags: [时间序列]
+categories:
+  - Statistics
+tags:
+  - Time Series
+  - R
 date: 2019-03-06
 ---
 
@@ -226,7 +230,7 @@ y.max = max(c(resid.1,resid.2,resid.3))
 plot(dates, resid.1, ylim=c(y.min, y.max), type="l", ylab="Residual Process") #上图  
 lines(dates,resid.2,col="blue")
 lines(dates,resid.3,col="brown")
-legend("bottom",legend=c("Trend","Season","Trend+Season"),lty = 1, col=c("black","blue","brown")) 
+legend("bottom",legend=c("Trend","Season","Trend+Season"),lty = 1, col=c("black","blue","brown"))
 ## ACF
 acf(resid.1,lag.max=12*4,main="") #左下图
 acf(resid.2,lag.max=12*4,main="",col="blue") #中下图

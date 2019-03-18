@@ -1,7 +1,11 @@
 ---
 layout: post
 title: "Xgboost应用及调参示例"
-tags: [机器学习]
+categories:
+  - Machine Learning
+tags:
+  - Application
+  - Supervised Learning
 date: 2018-09-21
 ---
 

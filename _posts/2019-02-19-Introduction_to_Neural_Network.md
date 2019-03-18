@@ -1,7 +1,10 @@
 ---
 layout: post
 title: "神经网络介绍"
-tags: [深度学习]
+categories:
+  - Deep Learning
+tags:
+  - Neural Network
 date: 2019-02-19
 ---
 

@@ -1,7 +1,11 @@
 ---
 layout: post
 title: "使用tensorflow搭建自编码器(Autoencoder)"
-tags: [深度学习]
+categories:
+  - Deep Learning
+tags:
+  - CNN
+  - Tensorflow
 date: 2018-09-12
 ---
 

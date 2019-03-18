@@ -1,7 +1,12 @@
 ---
 layout: post
 title: "GAN应用于半监督学习"
-tags: [深度学习]
+categories:
+  - Deep Learning
+tags:
+  - GAN
+  - Tensorflow
+  - Application
 date: 2019-01-15
 ---
 

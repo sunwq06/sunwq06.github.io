@@ -1,7 +1,10 @@
 ---
 layout: post
 title: "使用ecCodes读取ECMWF模式输出的GRIB文件"
-tags: [气象]
+categories:
+  - Data Analysis
+tags:
+  - Meteorology
 date: 2018-09-29
 ---
 欧洲中心的GRIB数据文件的编解码将使用[ecCodes](https://confluence.ecmwf.int//display/ECC/ecCodes+Home)来进行

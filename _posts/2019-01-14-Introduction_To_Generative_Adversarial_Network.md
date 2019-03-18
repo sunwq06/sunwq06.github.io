@@ -1,7 +1,11 @@
 ---
 layout: post
 title: "生成对抗网络GAN介绍"
-tags: [深度学习]
+categories:
+  - Deep Learning
+tags:
+  - GAN
+  - Tensorflow
 date: 2019-01-14
 ---
 ### 生成对抗网络GAN由生成器和判别器两部分组成

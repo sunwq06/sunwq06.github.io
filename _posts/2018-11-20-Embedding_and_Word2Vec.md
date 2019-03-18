@@ -1,7 +1,12 @@
 ---
 layout: post
 title: "使用Tensorflow实现词嵌入和Word2Vec"
-tags: [深度学习]
+categories:
+  - Deep Learning
+tags:
+  - RNN
+  - Tensorflow
+  - NLP
 date: 2018-11-20
 ---
 

@@ -1,7 +1,12 @@
 ---
 layout: post
 title: "使用fastai处理文本数据和表格数据"
-tags: [深度学习]
+categories:
+  - Deep Learning
+tags:
+  - Fastai
+  - NLP
+  - Application
 date: 2019-03-10
 ---
 

@@ -1,7 +1,10 @@
 ---
 layout: post
 title: "CART决策树和随机森林"
-tags: [机器学习]
+categories:
+  - Machine Learning
+tags:
+  - Supervised Learning
 date: 2018-11-03
 ---
 

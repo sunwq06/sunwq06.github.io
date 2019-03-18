@@ -1,7 +1,12 @@
 ---
 layout: post
 title: "使用Tensorflow实现RNN的简单应用"
-tags: [深度学习]
+categories:
+  - Deep Learning
+tags:
+  - RNN
+  - Tensorflow
+  - Application
 date: 2018-11-14
 ---
 

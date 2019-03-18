@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-theme: jekyll-theme-so-simple
+# theme: jekyll-theme-so-simple
 # remote_theme: mmistakes/so-simple-theme
 locale: zh-CN
 title: "Sun Wenqi's Blog"
@@ -98,3 +98,5 @@ footer_links:
   - title: Linkedin
     url: https://www.linkedin.com/in/%E6%96%87%E5%A5%87-%E5%AD%99-599766121/
     icon: fab fa-linkedin
+
+intensedebate_comments: true

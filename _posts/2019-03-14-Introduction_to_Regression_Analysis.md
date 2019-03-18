@@ -1,7 +1,11 @@
 ---
 layout: post
 title: "回归分析介绍"
-tags: [机器学习]
+categories:
+  - Machine Learning
+  - Statistics
+tags:
+  - Supervised Learning
 date: 2019-03-14
 ---
 

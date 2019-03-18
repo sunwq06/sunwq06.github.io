@@ -1,7 +1,10 @@
 ---
 layout: post
 title: "算法与数据结构之贪心算法"
-tags: [算法与数据结构]
+categories:
+  - Algorithm and Data Structure
+tags:
+  - Algorithm
 date: 2018-09-06
 ---
 
