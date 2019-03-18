@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+	<html>
+		{% include baidu-analysis.html %}
+        {% include mathjax.html %}
+		<head>
+			<title>{{ page.title }}</title>
+			<!-- link to main stylesheet -->
+			<link rel="stylesheet" type="text/css" href="/css/main.css">
+			<link rel="stylesheet" href="/tools/google-code-prettify/skins/desert.css">
+		</head>
+		<body>
+			<nav>
+	    		<ul>
+				      <li><a href="/">CV</a></li>
+	        		<li><a href="/blog">Blog</a></li>
+							<li><a href="/tags">Category</a></li>
+	    		</ul>
+			</nav>
+			<div class="container">
+
+			{{ content }}
+
+			</div><!-- /.container -->
+			<footer>
+	    		<ul>
+	        		<li><a href="mailto:sunwq06@163.com">email</a></li>
+	        		<li><a href="https://github.com/sunwenqi10">github.com/sunwenqi10</a></li>
+				<li><a href="/blog/atom.xml">订阅博客</a></li>
+			</ul>
+			</footer>
+		</body>
+	</html>
