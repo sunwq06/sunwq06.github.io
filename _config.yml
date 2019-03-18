@@ -3,7 +3,8 @@ name: Sun Wenqi's Blog
 markdown: kramdown
 kramdown:
   input: GFM
-  
+
+remote_theme: "mmistakes/so-simple-theme"
 google-code-prettify: true
 intensedebate_comments: true
 permalink: /blog/:year/:month/:day/:title
