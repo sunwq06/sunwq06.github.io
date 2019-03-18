@@ -1,0 +1,10 @@
+# Sample Authors
+# Remove file or replace with your own
+
+Wenqi Sun:
+  name: Wenqi Sun
+  picture: /img/sunwenqi.png
+  links:
+    - title: Github
+      url: https://github.com/sunwq06
+      icon: fab fa-github-square

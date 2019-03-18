@@ -1,10 +1,100 @@
-name: Sun Wenqi's Blog
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+theme: jekyll-theme-so-simple
+# remote_theme: mmistakes/so-simple-theme
+locale: zh-CN
+title: "Sun Wenqi's Blog"
+description: "Learn Data Science and Artificial Intelligence"
+baseurl: "/"
+url: "https://sunwq06.github.io"
+logo: "/img/background.jpg"
+date_format: "%B %-d, %Y"
+read_time: true
+words_per_minute: 200
+mathjax: true
+# Liquid
+liquid:
+  error_mode: strict
+# Build settings
+permalink: /:categories/:title/
 markdown: kramdown
-kramdown:
-  input: GFM
+feed:
+  path: atom.xml
 
-remote_theme: mmistakes/so-simple-theme
-google-code-prettify: true
-intensedebate_comments: true
-permalink: /blog/:year/:month/:day/:title
+# Pagination - https://jekyllrb.com/docs/pagination/
+paginate: 10
+paginate_path: /page:num/
+
+# Search
+search_full_content: true # can have performance implications for large sites
+
+# Taxonomy pages
+category_archive_path: "/categories/#"
+tag_archive_path: "/tags/#"
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-paginate
+
+# Front Matter Defaults
+defaults:
+  # Posts defaults
+  - scope:
+      path: "_posts"
+      type: posts
+    values:
+      layout: post
+      share: false
+
+# Site Author
+author:
+  name: Wenqi Sun
+  picture: /img/sunwenqi.png
+  email: sunwq06@163.com
+  twitter:
+  links:
+    - title: GitHub
+      url: https://github.com/sunwq06
+      icon: fab fa-github-square
+    - title: Linkedin
+      url: https://www.linkedin.com/in/%E6%96%87%E5%A5%87-%E5%AD%99-599766121/
+      icon: fab fa-linkedin
+
+# Footer Links
+footer_links:
+  - title: Feed
+    url: atom.xml
+    icon: fas fa-rss-square
+  - title: GitHub
+    url: https://github.com/sunwq06
+    icon: fab fa-github-square
+  - title: Linkedin
+    url: https://www.linkedin.com/in/%E6%96%87%E5%A5%87-%E5%AD%99-599766121/
+    icon: fab fa-linkedin
