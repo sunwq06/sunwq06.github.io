@@ -19,12 +19,11 @@ date: 9999-03-10
 ![img](/img/nlp1.png)
 
 
-文本数据的处理
 ```python
 from fastai.text import *
 path=Path('data/imdb')
 bs=48
-### 文本数据处理(language model)
+### (1) 文本数据处理(language model)
 ### Use data block API for data preparation
 ###   1. Read, Tokenization, and Numericalization
          # lower cased, split on space and punctuation symbols(punctuation symbols also treated as tokens)
@@ -37,7 +36,7 @@ bs=48
 data_lm = TextList.from_folder(path).filter_by_folder(include=['train', 'test', 'unsup']) \
                   .split_by_rand_pct(0.1).label_for_lm().databunch(bs=bs)
 data_lm.save('data_lm.pkl')
-### 加载预训练的语言模型并进行fine-tune
+### (2) 加载预训练的语言模型并进行fine-tune
 learn = language_model_learner(data_lm, AWD_LSTM, drop_mult=0.3)
 learn.lr_find()
 learn.recorder.plot(skip_end=15)
@@ -54,14 +53,14 @@ N_SENTENCES = 2
 print("\n".join(learn.predict(TEXT, N_WORDS, temperature=0.75) for _ in range(N_SENTENCES)))
 #######################################################################################
 learn.save_encoder('fine_tuned_enc') #save the encoder part of language model (responsible for creating and updating the hidden state)
-### 文本数据处理(text classification)
+### (3) 文本数据处理(text classification)
 ### Use data block API for data preparation
 ###   1. Read, Tokenization, and Numericalization; Split by train and valid folder (only keeps path/train and path/test folder)
 ###   2. Add labels for classification model (from data folders, e.g., path/train/neg, path/train/pos)
 data_clas = TextList.from_folder(path, vocab=data_lm.vocab).split_by_folder(valid='test') \
                     .label_from_folder(classes=['neg', 'pos']).databunch(bs=bs)
 data_clas.save('data_clas.pkl')
-### 使用之前训练好的语言模型(encoder part)搭建文本分类模型
+### (4) 使用之前训练好的语言模型(encoder part)搭建文本分类模型
 learn = text_classifier_learner(data_clas, AWD_LSTM, drop_mult=0.5)
 learn.load_encoder('fine_tuned_enc')
 learn.lr_find()
@@ -77,7 +76,7 @@ learn.save('third')
 learn.unfreeze()
 learn.fit_one_cycle(2, slice(1e-3/(2.6**4),1e-3), moms=(0.8,0.7))
 learn.save('final')
-### 预测
+### (5) 预测
 learn.predict("I really loved that movie, it was awesome!") #for example
 ```
 
