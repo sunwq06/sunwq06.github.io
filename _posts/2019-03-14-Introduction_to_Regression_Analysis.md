@@ -6,16 +6,16 @@ categories:
   - Statistics
 tags:
   - Supervised Learning
-date: 9999-03-14
+date: 2019-03-14
 ---
 
 ### 一、线性回归基础
 
 1. 模型介绍与求解
 
-   + 线性回归模型可写为$$y=\vec{x}\cdot\vec{\beta}+\epsilon$$，其中$$\epsilon\sim{N(0,\sigma^2)}$$，$$\vec{\beta}=\begin{bmatrix}\begin{smallmatrix}\beta_0 \\ \beta_1 \\ \vdots \\ \beta_k\end{smallmatrix}\end{bmatrix}$$为待求系数。
+   + 线性回归模型可写为$$y=\vec{x}\cdot\vec{\beta}+\epsilon$$，其中$$\vec{\beta}=\begin{bmatrix}\begin{smallmatrix}\beta_0 \\ \beta_1 \\ \vdots \\ \beta_k\end{smallmatrix}\end{bmatrix}$$为待求系数，$$\vec{x}=[1,x_1,x_2,\cdots,x_k]$$，$$\epsilon\sim{N(0,\sigma^2)}$$。
 
-   + 假定训练数据集$$X=\begin{bmatrix}\begin{smallmatrix}\vec{x_1}\\\vec{x_2}\\\vdots\\\vec{x_n}\end{smallmatrix}\end{bmatrix}=\begin{bmatrix}\begin{smallmatrix} 1&x_{11}&x_{12}&\cdots&x_{1k} \\ 1&x_{21}&x_{22}&\cdots&x_{2k} \\ \vdots&\vdots&\vdots&\cdots&\vdots \\ 1&x_{n1}&x_{n2}&\cdots&x_{nk} \end{smallmatrix}\end{bmatrix}$$，则有$$\vec{y}=\begin{bmatrix}\begin{smallmatrix}y_0 \\ y_1 \\ \vdots \\ y_n\end{smallmatrix}\end{bmatrix}=X\cdot\vec{\beta}+\begin{bmatrix}\begin{smallmatrix}\epsilon_0 \\ \epsilon_1 \\ \vdots \\ \epsilon_n\end{smallmatrix}\end{bmatrix}$$，其中$$\epsilon_i$$相互独立并且$$\epsilon_i\sim{N(0,\sigma^2)}$$
+   + 假定训练数据集$$X=\begin{bmatrix}\begin{smallmatrix}\vec{x_{(1)}}\\\vec{x_{(2)}}\\\vdots\\\vec{x_{(n)}}\end{smallmatrix}\end{bmatrix}=\begin{bmatrix}\begin{smallmatrix} 1&x_{(1)1}&x_{(1)2}&\cdots&x_{(1)k} \\ 1&x_{(2)1}&x_{(2)2}&\cdots&x_{(2)k} \\ \vdots&\vdots&\vdots&\cdots&\vdots \\ 1&x_{(n)1}&x_{(n)2}&\cdots&x_{(n)k} \end{smallmatrix}\end{bmatrix}$$，则有$$\vec{y}=\begin{bmatrix}\begin{smallmatrix}y_1 \\ y_2 \\ \vdots \\ y_n\end{smallmatrix}\end{bmatrix}=X\cdot\vec{\beta}+\begin{bmatrix}\begin{smallmatrix}\epsilon_1 \\ \epsilon_2 \\ \vdots \\ \epsilon_n\end{smallmatrix}\end{bmatrix}$$，其中$$\epsilon_i$$相互独立并且$$\epsilon_i\sim{N(0,\sigma^2)}$$
 
    + 可以使用最小二乘法求解$$\vec{\beta}$$，即$$argmin_{\beta_0,\beta_1,...,\beta_k}[(\vec{y}-X\vec{\beta})^T(\vec{y}-X\vec{\beta})]$$，求导可得$$X^T(\vec{y}-X\vec{\beta})=0$$，即$$\vec{\beta}$$的估计值$$\hat{\vec{\beta}}=(X^TX)^{-1}X^T\vec{y}$$
 
@@ -33,6 +33,55 @@ date: 9999-03-14
 
      不失一般性，令$$H_0\text{: }最后q个系数均为0(即\beta_{k-q+1}=\beta_{k-q+2}=\cdots=\beta_{k}=0)\text{  vs  }H_1\text{: }最后q个系数中至少有一个不为0$$
 
-     定义$$RSS=\sum_{i=1}^ne_i^2=\sum_{i=1}^n(y_i-\hat{y}_i)^2$$，记$$RSS_0$$为使用简化后的模型（$$\beta_{k-q+1}=\beta_{k-q+2}=\cdots=\beta_{k}=0$$）计算出的RSS，$$RSS_1$$为使用原始模型计算出的RSS，则检验统计量$$F=\frac{(RSS_0-RSS_1)/q}{RSS_1/(n-k-1)}$$在假设$$H_0$$下满足分布$$F_{q,n-k-1}$$，若$$F>F_{q,n-k-1,\alpha}$$，则在显著性水平为$$\alpha$$时拒绝原假设$$H_0$$
+     定义$$TSS=\sum_{i=1}^n(y_i-\bar{y})^2$$，$$RSS=\sum_{i=1}^ne_i^2=\sum_{i=1}^n(y_i-\hat{y}_i)^2$$以及$$R^2=\frac{TSS-RSS}{TSS}$$。记$$RSS_0$$为使用简化后的模型（$$\beta_{k-q+1}=\beta_{k-q+2}=\cdots=\beta_{k}=0$$）计算出的RSS，$$RSS_1$$为使用原始模型计算出的RSS，则检验统计量$$F=\frac{(RSS_0-RSS_1)/q}{RSS_1/(n-k-1)}$$在假设$$H_0$$下满足分布$$F_{q,n-k-1}$$，若$$F>F_{q,n-k-1,\alpha}$$，则在显著性水平为$$\alpha$$时拒绝原假设$$H_0$$
 
 ### 二、线性回归的模型诊断
+
+1. Influential Points
+
+   + Outlier
+
+     Outliers are unusual observations with respect to the values of the response variable.
+
+     记留数$$e_i=y_i-\hat{y}_i$$，则$$Cov({\vec{e}})=Cov(\vec{y}-X\hat{\vec{\beta}})=Cov((I-H)\vec{y})$$，其中$$H=X(X^TX)^{-1}X^T$$。因此$$Cov({\vec{e}})=(I-H)Cov(\vec{y})(I-H)^T=\sigma^2(I-H)(I-H)^T=\sigma^2(I-H)$$, $$\hat{Var}(e_i)=s^2(1-h_{ii})$$，其中$$h_ii$$是矩阵$$H$$的第$$i$$个对角元素
+
+     可通过留数判断是否为异常值：$$\begin{cases}e_i^{\text{st}}=\frac{e_i}{\sqrt{s^2(1-h_{ii})}}\sim{approximate\text{  } N(0,1)} \\ e_i^{\text{stud}}=\frac{e_i}{\sqrt{s_{(i)}^2(1-h_{ii})}}\sim{t_{n-(k+1)}}, \text{ }s_{(i)}^2为去掉第i个点进行回归后得到的s^2\end{cases}$$
+
+   + Leverage
+
+     Leverage is a measure of influence of an observation solely in terms of its explanatory variables.
+
+     第$$i$$个点的Leverage为$$h_{ii}$$，$$\sum_{i=1}^{n}{h_{ii}}=tr(X(X^TX)^{-1}X^T)=tr((X^TX)^{-1}X^TX)=tr(I_{k+1})=k+1\text{  }$$[注：$$tr(AB)=tr(BA)$$]
+
+     经验公式：High Leverage if $$h_{ii}>\frac{3(k+1)}{n}$$
+
+   + Cook Distance
+
+     $$D_i=\frac{\sum_{j=1}^{n}(\hat{y}_j-\hat{y}_j^{(i)})^2}{(k+1)s^2}=\frac{1}{k+1}\underbrace{(e_i^{\text{st}})^2}_\text{Outlier}\underbrace{\frac{h_{ii}}{1-h_{ii}}}_\text{Leverage}$$，其中$$\hat{y}_j^{(i)}$$为去掉第$$i$$个点进行回归后得到的预测值
+
+     经验公式：High Influential Point if Cook Distance $$D_i\gg\frac{1}{n}$$
+
+2. Heteroscedasticity
+
+   + Breusch-Pagan Test
+
+     假设检验$$H_0: Var(y)=\sigma^2\text{  }$$  vs  $$\text{  }H_1: Var(y)=\sigma^2(\vec{x}\cdot\vec{\gamma})=\sigma^2(\gamma_0+\gamma_1x_1+\gamma_2x_2+\cdots+\gamma_kx_k)$$  
+
+     使用$$e_i^2$$对$$\vec{x_{(i)}}$$做回归，则在假设$$H_0$$下有$$F=\frac{(TSS-RSS)/k}{RSS/(n-k-1)}=\frac{R^2/k}{(1-R^2)/(n-k-1)}\sim{F_{k,n-k-1}}$$
+
+   + White Test
+
+     假设检验$$H_0: Var(y)=\sigma^2\text{  }$$  vs  $$\text{  }H_1: Var(y)=\sigma^2(\gamma_0+\gamma_1\hat{y}+\gamma_2\hat{y}^2)$$
+
+     使用$$e_i^2$$对$$(1,\text{ },\hat{y}_i,\text{ },\hat{y}_i^2)$$做回归，则在假设$$H_0$$下有$$F=\frac{R^2/2}{(1-R^2)/(n-3)}\sim{F_{2,n-3}}$$
+
+   + 对y进行变换有时可以缓解Heteroscedasticity，例如$$ln(y+c)$$或$$\sqrt{y+c}$$，$$c\ge{0}$$
+
+3. Collinearity
+
+   + $$VIF_j=\frac{1}{1-R_j^2},\text{ }j=1,2,\cdots,k$$，其中$$R_j^2$$表示特征$$x_j$$对其余特征$$1,x_1,x_2,\cdots,x_{j-1},x_{j+1},\cdots,x_k$$进行回归后得到的$$R^2$$
+
+   + 经验公式：High Collinearity if $$VIF_j>10(i.e.,\text{ }R_j^2>0.9)$$
+
+
+### 三、线性回归的特征选择
