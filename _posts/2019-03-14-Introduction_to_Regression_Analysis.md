@@ -85,3 +85,46 @@ date: 2019-03-14
 
 
 ### 三、线性回归的特征选择
+
+1. LASSO
+
+   $$argmin_{\beta_0,\beta_1,...,\beta_k}[(\vec{y}-X\vec{\beta})^T(\vec{y}-X\vec{\beta})+\lambda\sum_{i=1}^k\lvert{\beta_i}\rvert]$$，$$\lambda\ge{0}$$
+
+   求解LASSO前需将特征进行标准化(Standardization)处理
+
+2. K-fold Cross Validation   
+
+   当$$K=n$$时称为LOOCV，线性回归的LOOCV可以通过公式表示，即$$\frac{1}{n}\sum_{i=1}^n(\frac{y_i-\hat{y}_i}{1-h_{ii}})^2$$
+
+3. Model Summary Statistics
+
+   + Adjusted R<sup>2</sup>
+
+     $$R_a^2=1-\frac{RSS/(n-p)}{TSS/(n-1)}=1-\frac{n-1}{n-p}(1-R^2)$$（注：模型使用了$$p-1$$个特征，即需求解$$p$$个参数，$$R_a^2\le{R^2}\le{1}$$）
+
+   + Mallow C<sub>p</sub> Statistic
+
+     $$C_p=\frac{RSS_p+2ps_{full}^2}{n}$$，其中$$RSS_p$$表示使用$$p-1$$个特征（即需求解$$p$$个参数）进行回归得到的RSS，$$s_{full}^2$$表示使用所有特征进行回归得到的$$s^2$$
+
+   + AIC and BIC
+
+     $$AIC=\frac{RSS_p+2ps_{full}^2}{ns_{full}^2}$$，$$BIC=\frac{RSS_p+ln(n)ps_{full}^2}{ns_{full}^2}$$
+
+4. Automatic Variable Selection
+
+   定义$$t(\hat{\beta}_j)=\frac{\hat{\beta}_j}{\sqrt{[\hat{Cov}(\hat{\vec{\beta}})]_{j+1,j+1}}}$$，具体说明参见“回归系数的统计解释”这一部分
+
+   + Forward Selection
+     + 从常数开始每步在前一步的基础上加入一个特征，可从几个方面决定该特征的选取，例如$$\lvert{t(\hat{\beta}_j)}\rvert$$最大，或者加入该特征后RSS最小（即$$R^2$$最大）
+     + 最终从模型$$M_0,M_1,\cdots,M_k$$（下标表示使用的特征数量）中选择最优模型，选择可以通过交叉检验（Cross Validation）进行，也可以使用模型统计量（例如$$R_a^2,\text{ }C_p,\text{ }AIC,\text{ }BIC$$）进行选择
+
+   + Backward Selection
+     + 从所有特征开始每步在前一步的基础上删除一个特征，可从几个方面决定该特征的选取，例如$$\lvert{t(\hat{\beta}_j)}\rvert$$最小，或者删除该特征后RSS最小（即$$R^2$$最大）
+     + 最终从模型$$M_0,M_1,\cdots,M_k$$中选择最优模型
+
+   + Stepwise Selection
+     + 从常数开始每步在前一步的基础上加入一个特征，同其它未加入的特征相比，该特征满足在加入模型后得到的$$\lvert{t(\hat{\beta}_j)}\rvert$$最大，并且可以通过$$\beta_j\ne{0}$$的显著性检验，具体说明参见“回归系数的统计解释”这一部分
+     + 加入新特征后在新模型中查看是否有之前加入的特征不能通过显著性检验，如果有就从模型中删除这些特征
+     + 重复上述两个步骤直到不能再添加或删除任一特征为止，将每步所得到的模型进行比较，从中选择最优模型
+
+### 四、广义线性模型GLM
