@@ -128,3 +128,46 @@ date: 2019-03-14
      + 重复上述两个步骤直到不能再添加或删除任一特征为止，将每步所得到的模型进行比较，从中选择最优模型
 
 ### 四、广义线性模型GLM
+   线性指数族（LED）的分布形式为$$f(y;\theta,\phi)=exp[\frac{y\theta-b(\theta)}{\phi}+S(y,\phi)]$$，其中$$\mu=E(y)=b^{'}(\theta)$$，$$\sigma^2=Var(y)={\phi}b^{''}(\theta)$$
+
+   GLM：y的分布属于LED并且有链接函数$$g(\mu)=\vec{x}\cdot\vec{\beta}=\beta_0+\beta_1x_1+\cdots+\beta_kx_k$$（通常取$$g(\mu)=\theta$$）。容易看出线性回归也是GLM的一种，y满足正态分布属于LED，并且$$g(\mu)=\theta=\mu$$
+
+   系数$$\vec{\beta}$$的求解使用最大似然估计（MLE），取$$g(\mu)=\theta$$，则Log Likelihood $$l(\vec{\beta})=\sum_{i=1}^n[\frac{y_i\theta_i-b(\theta_i)}{\phi_i}+S(y_i,\phi_i)]=\sum_{i=1}^n[\frac{y_i\vec{x_{(i)}}\cdot\vec{\beta}-b(\vec{x_{(i)}}\cdot\vec{\beta})}{\phi_i}+S(y_i,\phi_i)]$$，求解方程$$\frac{\partial{l}}{\partial{\beta}}=\sum_{i=1}^n[\frac{y_i-b^{'}(\vec{x_{(i)}}\cdot\vec{\beta})}{\phi_i}]\vec{x_{(i)}}^T=\sum_{i=1}^n\frac{y_i-\hat{\mu}_i}{\phi_i}\begin{bmatrix}\begin{smallmatrix}1\\x_{(i)1}\\\vdots\\x_{(i)k}\end{smallmatrix}\end{bmatrix}=0$$（注：$$\begin{bmatrix}\begin{smallmatrix}\vec{x_{(1)}}\\\vec{x_{(2)}}\\\vdots\\\vec{x_{(n)}}\end{smallmatrix}\end{bmatrix}=\begin{bmatrix}\begin{smallmatrix} 1&x_{(1)1}&x_{(1)2}&\cdots&x_{(1)k} \\ 1&x_{(2)1}&x_{(2)2}&\cdots&x_{(2)k} \\ \vdots&\vdots&\vdots&\cdots&\vdots \\ 1&x_{(n)1}&x_{(n)2}&\cdots&x_{(n)k} \end{smallmatrix}\end{bmatrix}$$）
+
+   模型拟合度：
+   + Global Measure
+     + Deviance $$D=2(l_{sat}-l)$$
+
+        Saturated Model：将$$l(\vec{\beta})$$改写成关于$$\mu_1,\mu_2,\cdots,\mu_n$$的表达形式，$$\mu_i\gets{y_i}$$
+     + Pseudo-R<sup>2</sup> $$R_p^2=\frac{l-l_{iid}}{l_{sat}-l_{iid}}$$
+
+        IID Model：将$$l(\vec{\beta})$$改写成关于$$\mu_1,\mu_2,\cdots,\mu_n$$的表达形式，$$\mu_i\gets{\bar{y}}$$
+   + Local Measure
+     + Pearson Residual $$r_i=\frac{y_i-\hat{\mu}_i}{\sqrt{\hat{Var}(y_i)}}$$，$$i=1,2,\cdots,n$$
+     + Deviance Residual $$d_i=sign(y_i-\hat{\mu}_i)\sqrt{2[ln(f(y_i;\theta_i^{sat}))-ln(f(y_i;\hat{\theta}_i))]}$$（容易看出$$D=\sum_{i=1}^nd_i^2$$）
+   + Variable Selection Measure
+     + $$AIC=-2l+2p$$，$$BIC=-2l+p\cdot{ln(n)}$$，其中$$p$$为参数个数，$$l$$为Log Likelihood，$$n$$为训练样本个数
+
+   系数的假设检验（Likelihood Ratio Test）:
+   + 不失一般性，令H<sub>0</sub>：$$\beta_1=\beta_2=\cdots=\beta_r=0$$  vs  H<sub>1</sub>：No constraints on $$\vec{\beta}$$
+
+      令$$l_0$$表示在假设H<sub>0</sub>下的Log Likelihood，$$LRT=2(l-l_0)$$在假设H<sub>0</sub>下满足自由度为$$r$$的$$\chi^2$$分布$$\chi_r^2$$（容易看出$$D\sim{\chi^2_{n-(k+1)}}$$），因此若$$LRT>\chi^2_{r,\alpha}$$，则在显著性水平为$$\alpha$$时拒绝原假设H<sub>0</sub>
+
+      若H<sub>0</sub>：$$\beta_1=\beta_2=\cdots=\beta_k=0$$，则$$LRT=2(l-l_{iid})\sim{\chi_k^2}$$
+
+   下面介绍两个比较常用的GLM：
+   1. Logistic Regression
+      + Bernoulli分布$$f(y;\pi)=\pi^y(1-\pi)^{1-y}$$（其中$$y\in{\{0,1\}}$$），容易得出$$\mu=E(y)=\pi$$，$$\phi=1$$，$$\theta=ln\frac{\pi}{1-\pi}$$，$$b(\theta)=ln(1+e^{\theta})$$
+      + 令$$\theta=g(\mu)=\vec{x}\cdot\vec{\beta}$$，则$$\mu=\pi=\frac{1}{1+e^{-\theta}}=\frac{1}{1+e^{-\vec{x}\cdot\vec{\beta}}}$$，$$\vec{\beta}$$的最大似然估计值满足$$\sum_{i=1}^n(y_i-\hat{\pi}_i)\vec{x_{(i)}}^T=\sum_{i=1}^n(y_i-\frac{1}{1+e^{-\vec{x_{(i)}}\cdot\hat{\vec{\beta}}}})\begin{bmatrix}\begin{smallmatrix}1\\x_{(i)1}\\\vdots\\x_{(i)k}\end{smallmatrix}\end{bmatrix}=0$$
+      + Deviance $$D=2\sum_{i=1}^n[y_iln\frac{y_i}{\hat{\pi}_i}+(1-y_i)ln\frac{1-y_i}{1-\hat{\pi}_i}]$$
+      + 因为$$\hat{\vec{\beta}}$$是最大似然估计值，所以$$\hat{Cov}(\hat{\vec{\beta}})=I(\hat{\vec{\beta}})^{-1}$$，其中$$I(\hat{\vec{\beta}})=-\frac{\partial^2}{\partial\vec{\beta}(\partial\vec{\beta})^T}l(\vec{\beta})\mid_{\vec{\beta}=\hat{\vec{\beta}}}=\sum_{i=1}^n\frac{e^{\vec{x_{(i)}}\cdot\hat{\vec{\beta}}}}{(1+e^{\vec{x_{(i)}}\cdot\hat{\vec{\beta}}})^2}\vec{x_{(i)}}^T\vec{x_{(i)}}=\sum_{i=1}^n\frac{e^{\vec{x_{(i)}}\cdot\hat{\vec{\beta}}}}{(1+e^{\vec{x_{(i)}}\cdot\hat{\vec{\beta}}})^2}\begin{bmatrix}\begin{smallmatrix}1\\x_{(i)1}\\\vdots\\x_{(i)k}\end{smallmatrix}\end{bmatrix}\begin{bmatrix}\begin{smallmatrix}1&x_{(i)1}&\cdots&x_{(i)k}\end{smallmatrix}\end{bmatrix}$$为Fisher信息矩阵
+      + 若$$y\in{\{1,2,\cdots,c\}}$$且为nominal类型，则可令$$ln\frac{\pi_j}{\pi_c}=\vec{x}\cdot\vec{\beta}_j$$，$$j=1,2,\cdots,c$$并且$$\vec{\beta}_c=\vec{0}$$，容易看出$$\pi_j=\frac{e^{\vec{x}\cdot\vec{\beta}_j}}{\sum_{m=1}^c{e^{\vec{x}\cdot\vec{\beta}_m}}}$$，$$j=1,2,\cdots,c$$
+      + 若$$y\in{\{1,2,\cdots,c\}}$$且为ordinal类型，则可令$$ln\frac{\tau_j}{1-\tau_j}=ln\frac{\pi_1+\pi_2+\cdots+\pi_j}{\pi_{j+1}+\pi_{j+2}+\cdots+\pi_c}=\vec{x}\cdot\vec{\beta}_j$$，$$j=1,2,\cdots,c-1$$，容易看出
+      $$\tau_j=\frac{1}{1+e^{-\vec{x}\cdot\vec{\beta}_j}}$$，$$j=1,2,\cdots,c-1$$。还可以使用一个简化的模型求解，记$$\vec{\beta}_j=\begin{bmatrix}\begin{smallmatrix}\beta_{j0} \\ \beta_1 \\ \beta_2 \\ \vdots \\ \beta_k\end{smallmatrix}\end{bmatrix}$$，其中$$\beta_1,\beta_2,\cdots,\beta_k$$与$$j$$无关，即$$ln\frac{\tau_j}{1-\tau_j}=\beta_{j0}+\beta_1x_1+\beta_2x_2+\cdots+\beta_kx_k$$
+   2. Poisson Regression
+      + Poisson分布$$f(y;\lambda)=\frac{\lambda^y}{y!}e^{-\lambda}$$，容易得出$$\mu=E(y)=\lambda$$，$$\phi=1$$，$$\theta=ln\lambda$$，$$b(\theta)=e^\theta$$
+      + 令$$\theta=g(\mu)=\vec{x}\cdot\vec{\beta}$$，则$$\mu=\lambda=e^{\vec{x}\cdot\vec{\beta}}$$，$$\vec{\beta}$$的最大似然估计值满足$$\sum_{i=1}^n(y_i-\hat{\lambda}_i)\vec{x_{(i)}}^T=\sum_{i=1}^n(y_i-e^{\vec{x_{(i)}}\cdot\hat{\vec{\beta}}})\begin{bmatrix}\begin{smallmatrix}1\\x_{(i)1}\\\vdots\\x_{(i)k}\end{smallmatrix}\end{bmatrix}=0$$，此外Fisher信息矩阵$$I(\hat{\vec{\beta}})=\sum_{i=1}^ne^{\vec{x_{(i)}}\cdot\hat{\vec{\beta}}}\vec{x_{(i)}}^T\vec{x_{(i)}}=e^{\vec{x_{(i)}}\cdot\hat{\vec{\beta}}}\begin{bmatrix}\begin{smallmatrix}1\\x_{(i)1}\\\vdots\\x_{(i)k}\end{smallmatrix}\end{bmatrix}\begin{bmatrix}\begin{smallmatrix}1&x_{(i)1}&\cdots&x_{(i)k}\end{smallmatrix}\end{bmatrix}$$
+      + Goodness Of Fit Statistics
+         + Likelihood Ratio Test：Deviance $$D=2\sum_{i=1}^ny_iln\frac{y_i}{\hat{\lambda}_i}-2\sum_{i=1}^ny_i+2\sum_{i=1}^n\hat{\lambda}_i=2\sum_{i=1}^ny_iln\frac{y_i}{\hat{\lambda}_i}\sim{\chi^2_{n-(k+1)}}$$
+         + Pearson $$\chi^2$$ Test：$$X^2=\sum_{i=1}^n(\frac{y_i-\hat{\lambda}_i}{\sqrt{\hat{\lambda}_i}})^2\sim{\chi^2_{n-(k+1)}}$$
+         + 上述两个检验在样本数趋于无穷大时是等价的
