@@ -360,7 +360,7 @@ print(feature_results.head(10))
   import lime.lime_tabular
   ### Find the residuals
   residuals = abs(final_model.predict(test_features) - test_labels.values.reshape((-1,)))
-  # Exact the worst prediction
+  ### Extract the worst prediction
   wrong = test_features.values[np.argmax(residuals), :]
   ### Create a lime explainer object
   explainer = lime.lime_tabular.LimeTabularExplainer(training_data = train_features.values, \
@@ -378,5 +378,5 @@ print(feature_results.head(10))
   plt.xlabel('Effect on Prediction', size = 22)
   ```
   ![img](/img/reg6.png)
-  
+
   从上图可以看出在该例中模型预测值偏低的主要原因是Site EUI以及Weather Normalized Site Electricity Intensity的值较高；这两个值越高，建筑物的节能之星评分就越低，这是模型经过训练所总结出来的性质。在该例中虽然这两个值很高，但是建筑物的实际节能之星评分也很高，这就与模型经过大量数据训练所得到的经验相悖，最终造成了较大的预测误差。
